@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Next Christmas</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/next-christmas.css">
+        <style type="text/css">
+            #next-christmas {
+                text-align: center;
+                margin-top: 35px;
+            }
+
+            #next-christmas-title {
+                margin-bottom: 25px;
+            }
+
+            #count-down-date {}
+            #count-down-hour {}
+
+            #christmas-message {
+                font-size: 30px;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <div id="no-internet">Internet is required!</div>
+        <div id="next-christmas"></div>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+        <script type="text/javascript">$('#no-internet').hide();</script>
+        <script type="text/javascript">
+            function christmasDisplay(e){if(!moment.isMoment(e))throw"moment object required!";e.isDST()&&e.add(1,"hour");var t=e.format("YYYY");$("#next-christmas-title").show(),$("#christmas-message").hide(),"12"==e.format("MM")&&"25"<e.format("DD")&&t++;var n=moment(t+"1225","YYYYMMDD"),r=n.diff(e),i=moment.duration(r,"ms"),s=Math.floor(i.asDays()),o=i.months(),u=i.days(),a=i.hours(),f=i.minutes(),l=i.seconds(),c="";if(s>0){o>0?(c+=o+" month",o>1&&(c+="s")):s>359&&(c+="12 months");if(o>0&&u>0||s>360)c+=" ";u>0&&(c+=u+" day",u>1&&(c+="s")),s>29&&(c+=" ("+s+" day"+(s>1?"s":"")+")")}else s==0&&a>0||f>0||l>0?c="Tomorrow":c="It's today";$("#count-down-date").html(c),s>0||a>0||f>0||l>0?$("#count-down-hour").html(a+":"+(f<10?"0":"")+f+":"+(l<10?"0":"")+l):($("#next-christmas-title").hide(),$("#count-down-hour").empty(),$("#christmas-message").show())}function loop(){christmasDisplay(moment()),setTimeout(function(){loop()},1e3)}function nextChristmas(){var e=$("<h2>").attr("id","next-christmas-title").html("Christmas is in"),t=$("<div>").attr("id","count-down-date").addClass("lead"),n=$("<div>").attr("id","count-down-hour").addClass("lead"),r=$("<div>").attr("id","christmas-message").addClass("lead").html("Merry Christmas!");$("#christmas-message").hide(),$("#next-christmas").append(e).append(t).append(n).append(r),loop()};
+            $().ready(function() {
+                nextChristmas();
+            });
+        </script>
+    </body>
+</html>
